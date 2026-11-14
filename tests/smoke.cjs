@@ -24,8 +24,6 @@ const { chromium } = require('playwright');
     assert.notEqual(frames[0],frames[2],'Animation must change');
     await page.evaluate(() => window.__render(0));
     await page.screenshot({path:'/tmp/cedric-desktop.png'});
-    await page.locator('[data-category="技术思考"]').click();
-    assert.match(await page.locator('#writing-heading').textContent(),/实践/);
     for (const size of [{width:375,height:812},{width:760,height:900},{width:1024,height:768}]) {
       await page.setViewportSize(size);
       await page.evaluate(() => new Promise(resolve => requestAnimationFrame(resolve)));
@@ -44,7 +42,29 @@ const { chromium } = require('playwright');
     await failure.goto('http://127.0.0.1:8000');
     await failure.locator('#canvas-status').waitFor({state:'visible'});
     assert(await failure.locator('#works').isVisible(),'Image failure preserves content');
+    await page.goto('http://127.0.0.1:8000/works.html');
+    await page.getByRole('button',{name:'工具与开源'}).click();
+    assert(await page.locator('#empty-results').isVisible(),'Empty categories remain clear');
+    await page.locator('#reset-filters').click();
+    assert.equal(await page.locator('.entry:visible').count(),1);
+    await page.locator('.entry h2 a').click();
+    assert(await page.locator('.prose').isVisible(),'Work detail exists');
+    assert(await page.locator('.toc a').count()>1,'Detail has a generated directory');
+    await page.goto('http://127.0.0.1:8000/articles.html');
+    assert(await page.locator('#empty-results').isVisible());
+    await page.goto('http://127.0.0.1:8000/studio.html');
+    await page.waitForFunction(()=>document.getElementById('connection').textContent.includes('已连接'));
+    for (const route of ['works.html','articles.html','about.html','works/cedric-being/','studio.html']) {
+      await page.goto('http://127.0.0.1:8000/'+route);
+      await page.setViewportSize({width:375,height:812});
+      assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),route+' has no horizontal overflow');
+    }
+    await page.setViewportSize({width:1440,height:1000});
+    await page.goto('http://127.0.0.1:8000/works.html');
+    await page.screenshot({path:'/tmp/cedric-works-final.png',fullPage:true});
+    await page.goto('http://127.0.0.1:8000/studio.html');
+    await page.screenshot({path:'/tmp/cedric-studio-final.png',fullPage:true});
     assert.deepEqual(errors,[],'No browser runtime errors');
-    console.log('PASS: image/CORS, loop, pose changes, pause, filters, responsive layout, reduced motion, image failure, runtime errors');
+    console.log('PASS: hero, image/CORS, loop, pause, responsive pages, reduced motion, image failure, categories, detail directory, studio connection');
   } finally { await browser.close(); }
 })().catch(error => { console.error(error); process.exitCode = 1; });

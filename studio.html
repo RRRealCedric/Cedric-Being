@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>内容工作台 — Cedric Being</title><link rel="stylesheet" href="assets/site.css"><script src="assets/studio.js" defer></script></head>
+<body>
+  <header class="site-header"><a class="site-brand" href="index.html">Cedric Being.</a><nav class="site-nav" aria-label="工作台导航"><a href="works.html">作品</a><a href="articles.html">文章</a><a href="studio.html" aria-current="page">内容工作台</a></nav></header>
+  <main class="studio-wrap">
+    <div class="studio-intro"><p class="eyebrow">CONTENT STUDIO / LOCAL FIRST</p><h1>把内容交给网站。</h1><p>选择 Markdown 或 HTML 文件，补充标题与分类。导入后自动生成列表和详情页；发布时将内容文件提交到 GitHub。</p></div>
+    <p id="connection" class="studio-note" role="status">正在连接本地内容服务…</p>
+    <div class="studio-grid">
+      <form id="import-form">
+        <label class="upload-zone"><span id="filename">选择或拖入一份内容文件</span><small>.md / .markdown / .html / .htm · 最大 2 MB<br>已填写文件头的内容会自动识别标题、分类和标签</small><input id="file" type="file" accept=".md,.markdown,.html,.htm" aria-label="选择 Markdown 或 HTML 文件"></label>
+        <div class="field-row"><label class="field">收录到<select id="kind"><option value="articles">文章</option><option value="works">作品</option></select></label><label class="field">分类<select id="category"></select></label></div>
+        <label class="field">标题<input id="title" maxlength="200" required placeholder="一个清楚、具体的标题"></label>
+        <label class="field">页面名称 / slug<input id="slug" maxlength="100" required pattern="[\p{L}\p{N}][\p{L}\p{N}_\-]{0,99}" placeholder="如 building-a-personal-site"></label>
+        <div class="field-row"><label class="field">发布日期<input id="date" type="date"></label><label class="field">标签（逗号分隔）<input id="tags" placeholder="如 前端, 设计"></label></div>
+        <label class="field">摘要<textarea id="summary" maxlength="300" placeholder="告诉读者：这篇内容为什么值得看。"></textarea></label>
+        <div class="field-row"><label class="field">作品地址（可选）<input id="link" type="url" placeholder="https://"></label><label class="field">源码地址（可选）<input id="source" type="url" placeholder="https://github.com/…"></label></div>
+        <label class="check-field"><input id="featured" type="checkbox"> 在首页精选展示</label>
+        <label class="check-field"><input id="draft" type="checkbox"> 保存为草稿，不公开展示</label>
+        <label class="check-field"><input id="overwrite" type="checkbox"> 更新已有的同名内容（替换原文件）</label>
+        <div class="studio-actions"><button id="import" type="submit" class="pill" disabled>导入到网站 ↗</button><button id="download" class="plain-button" type="button" disabled>下载整理后的文件 ↓</button></div>
+        <p id="status" class="studio-status" role="status" aria-live="polite"></p><a id="result-link" class="text-link" hidden>查看生成的页面 ↗</a>
+      </form>
+      <div class="preview-panel"><h2>正文预览</h2><iframe id="preview" title="内容预览" sandbox="" referrerpolicy="no-referrer" srcdoc="<!doctype html><html lang='zh-CN'><body style='font:14px system-ui;color:#70706d;padding:28px;line-height:1.8'>选择文件后，在这里预览统一排版后的正文。</body></html>"></iframe></div>
+    </div>
+    <section class="help-box"><h2>从导入到发布</h2><p>1. 在本机运行 <code>npm run dev</code>，使用此工作台导入文件。内容会保存到 <code>content/articles/</code> 或 <code>content/works/</code>，网页立即重新生成。</p><p>2. 查看详情页，确认排版。需要调整时编辑原文件，或者勾选「更新已有的同名内容」重新导入。</p><p>3. 将内容文件提交并推送到 GitHub，自动部署更新。也可以直接在 GitHub 上传文件：</p><p><a href="https://github.com/RRRealCedric/Cedric-Being/upload/main/content/articles" target="_blank" rel="noopener noreferrer">上传文章 ↗</a> · <a href="https://github.com/RRRealCedric/Cedric-Being/upload/main/content/works" target="_blank" rel="noopener noreferrer">上传作品 ↗</a> · <a href="https://github.com/RRRealCedric/Cedric-Being/tree/main/templates" target="_blank" rel="noopener noreferrer">查看内容模板 ↗</a></p><p>图片放入 <code>content/assets/</code>，正文使用 <code>../assets/图片名.png</code>。HTML 支持正文、图片、表格与链接，脚本、内嵌页面和自定义样式会移除，以统一阅读体验。</p></section>
+  </main>
+</body></html>
