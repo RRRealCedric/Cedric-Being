@@ -14,8 +14,9 @@
     return result;
   }
   function preview(html) {
-    const policy = "default-src 'none'; img-src https: http:; style-src 'unsafe-inline'";
-    $('preview').srcdoc=`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="${policy}"><style>body{padding:20px;color:#222;font:14px/1.9 system-ui;overflow-wrap:anywhere}h1,h2,h3{font-weight:500;line-height:1.5}pre{background:#f1f1ee;padding:16px;overflow:auto}code{font-family:monospace}img{max-width:100%;height:auto}table{border-collapse:collapse;display:block;overflow:auto}td,th{border:1px solid #ddd;padding:8px}blockquote{border-left:2px solid #aaa;padding-left:18px;color:#666}a{color:inherit}</style></head><body>${html}</body></html>`;
+    const policy = "default-src 'none'; img-src https: http:; style-src 'unsafe-inline' https: http:; font-src https:";
+    const stylesheet = new URL('assets/site.css',location.href).href;
+    $('preview').srcdoc=`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="${policy}"><link rel="stylesheet" href="${stylesheet}"><style>body{padding:24px;background:#fff}.prose{font-size:15px}</style></head><body><article class="prose">${html}</article></body></html>`;
   }
   async function refresh(initial=false) {
     if(!file) return;

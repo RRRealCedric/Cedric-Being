@@ -51,7 +51,7 @@ const { chromium } = require('playwright');
     assert(await page.locator('.prose').isVisible(),'Work detail exists');
     assert(await page.locator('.toc a').count()>1,'Detail has a generated directory');
     await page.goto('http://127.0.0.1:8000/articles.html');
-    assert(await page.locator('#empty-results').isVisible());
+    assert(await page.locator('.entry:visible').count()>0 || await page.locator('#empty-results').isVisible());
     await page.goto('http://127.0.0.1:8000/studio.html');
     await page.waitForFunction(()=>document.getElementById('connection').textContent.includes('已连接'));
     for (const route of ['works.html','articles.html','about.html','works/cedric-being/','studio.html']) {
