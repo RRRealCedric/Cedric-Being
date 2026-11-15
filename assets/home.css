@@ -2,9 +2,12 @@ html.home-scroll{scroll-snap-type:y mandatory;scroll-padding:0}
 .home-page .hero,.home-page main>.section{scroll-snap-align:start;scroll-snap-stop:always;scroll-margin:0}
 .home-page h1{font-weight:400;letter-spacing:.015em;line-height:1.25}
 .home-page .intro{font-size:15px;line-height:1.9}
-.scroll-cue{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;margin-top:34px;color:var(--ink);opacity:.65;transition:opacity .2s}
-.scroll-cue:hover,.scroll-cue:focus-visible{opacity:1}
-.scroll-cue svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round}
+.scroll-cue{display:inline-flex;align-items:center;justify-content:center;width:48px;height:52px;margin-top:58px;color:var(--ink);opacity:calc(.6 + var(--cue-drift,0)*.1);transition:opacity .3s,transform .3s}
+.scroll-cue:hover,.scroll-cue:focus-visible{opacity:1;transform:translateY(3px)}
+.scroll-cue svg{width:28px;height:36px;fill:none;stroke:currentColor;stroke-width:1.25;stroke-linecap:round;stroke-linejoin:round;transform:translateY(calc(var(--cue-drift,0)*5px))}
+.scroll-cue path{transition:transform .3s}
+.scroll-cue:hover path:first-child,.scroll-cue:focus-visible path:first-child{transform:translateY(-1px)}
+.scroll-cue:hover path:last-child,.scroll-cue:focus-visible path:last-child{transform:translateY(2px)}
 .home-page main>.section{position:relative;isolation:isolate;display:flex;justify-content:center;align-items:center;min-height:100vh;min-height:100svh;width:100%;max-width:none;margin:0;padding:60px 76px;border:0}
 .home-page main>.section::before{content:"";position:absolute;z-index:-1;inset:0;pointer-events:none;background:radial-gradient(ellipse at 20% 35%,#e2e1da 0,transparent 55%),radial-gradient(ellipse at 90% 75%,#e9e8e0 0,transparent 48%)}
 .home-page #writing::before{background:radial-gradient(ellipse at 80% 20%,#deded6 0,transparent 58%),radial-gradient(ellipse at 5% 90%,#e7e5dc 0,transparent 52%)}
@@ -64,4 +67,5 @@ html.home-scroll{scroll-snap-type:y mandatory;scroll-padding:0}
 @media(prefers-reduced-motion:reduce){
   html.home-scroll{scroll-behavior:auto;scroll-snap-type:y proximity}
   .chapter-panel{transform:none;filter:none;opacity:1}
+  .scroll-cue,.scroll-cue svg,.scroll-cue path{transform:none!important;transition:none}
 }
